@@ -24,6 +24,6 @@ return [
         'taglib_begin' => '<',
         // 标签库标签结束标记
         'taglib_end'   => '>',
-        'view_base'=>__DIR__.'/../../public/template/', //入口文件在public下
+//        'view_base'=>__DIR__.'/../../public/template/', //入口文件在public下
     ],
 ];

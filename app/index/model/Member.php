@@ -8,7 +8,7 @@ class Member extends Model
     //
     protected $pk = 'id';
     protected $table = 'admin_member';
-    protected $field = ['username','phone','sex','store_name','province','city','area','addr','add_time','ip','status','open_id','image'];
+    protected $field = ['username','phone','sex','store_name','area','addr','add_time','ip','status','user_id','image'];
 
     public function getOpenIdAttr($value)
     {

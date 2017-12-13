@@ -4,11 +4,11 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Request;
-use app\index\model\AdminOpen;
+use app\index\model\Open as AdminOpen;
 class Weixin extends Controller
 {
-    protected $appid="wxe51333b9199fa330";
-    protected $appsecret="5b5334a627ccc6a461005dfb89e7aaa9";
+    protected $appid="wxb167d39997bbadc3";
+    protected $appsecret="7c11572d14b888708abe76a23410ba47";
     public function _initialize()
     {
         $member_id=session('user')['user_id'];
@@ -20,7 +20,7 @@ class Weixin extends Controller
             $this->redirect(url('index/index'));
         }
 
-        $redirect_uri = urlencode('https://'.$_SERVER['HTTP_HOST'].__ROOT__.'/index.php/index/Weixin/oauth');
+        $redirect_uri = urlencode('http://'.$_SERVER['HTTP_HOST'].__ROOT__.'/index.php/index/Weixin/oauth');
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$this->appid.'&redirect_uri='.$redirect_uri.'&response_type=code&scope=snsapi_userinfo&state=state#wechat_redirect';
 
         header('location:'.$url);

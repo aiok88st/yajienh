@@ -23,6 +23,37 @@ class Index extends Fater
         ]);
     }
 
+    //报名
+    public function add(Request $request,Member $member){
+        try{
+            $data = $request->param();
+            $result = $this->validate($data, [
+                'phone|手机号码' => ['require', "regex:/^1[34578]{1}[0-9]{9}$/"],
+                'username|姓名' => 'require|token',
+                'store_name|店铺名称' => ['require'],
+                'area|地区'=>'require',
+                'addr|地址'=>'require',
+            ]);
+            if(true !== $result){
+                // 验证失败 输出错误信息
+                return rejson(0,$result);
+            }
+            if(isset($data['images']) && !empty($data['images'])){
+                $res=$this->upload($data['image']);
+                if($res['code'==1]){
+                    $data['image']=$res['path'];
+                }
+            }
+
+            $data['user_id']=UID;
+            $member->allowField(true)->insert($data);
+            return rejson(1,'报名成功');
+        }catch (Exception $e){
+            return rejson(0,$e->getMessage());
+        }
+    }
+
+
     public function edit(Request $request,Member $member,Log $log){
         try {
             $data = $request->param();

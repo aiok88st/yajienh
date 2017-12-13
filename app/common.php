@@ -149,3 +149,42 @@ function openWindow($msg,$url=''){
     $html .='<script type="text/javascript">layer.msg(\''.$msg.'\',{time:3000},function(){window.location.href="'.$url.'"})</script>';
     echo $html;
 }
+
+function webMsg($data){
+    $to_uid = "123";
+// 推送的url地址，使用自己的服务器地址
+    $push_api_url = "http://127.0.0.1:2121/";
+    $post_data = array(
+        "type" => "publish",
+        "content" => $data,
+        "to" => $to_uid,
+    );
+    $ch = curl_init ();
+    curl_setopt ( $ch, CURLOPT_URL, $push_api_url );
+    curl_setopt ( $ch, CURLOPT_POST, 1 );
+    curl_setopt ( $ch, CURLOPT_HEADER, 0 );
+    curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+    curl_setopt ( $ch, CURLOPT_POSTFIELDS, $post_data );
+    curl_setopt ($ch, CURLOPT_HTTPHEADER, array("Expect:"));
+    $return = curl_exec ( $ch );
+    curl_close ( $ch );
+
+}
+
+function format_date($time){
+    $t=time()-$time;
+    $f=array(
+        '31536000'=>'年',
+        '2592000'=>'个月',
+        '604800'=>'星期',
+        '86400'=>'天',
+        '3600'=>'小时',
+        '60'=>'分钟',
+        '1'=>'秒'
+    );
+    foreach ($f as $k=>$v)    {
+        if (0 !=$c=floor($t/(int)$k)) {
+            return $c.$v.'前';
+        }
+    }
+}
